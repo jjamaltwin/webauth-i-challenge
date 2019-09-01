@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Users = require('./auth-model');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const restricted = require('./restricted-middleware')
 
 
 router.get("/", (req, res) => {
@@ -50,7 +51,7 @@ router.post('/login', (req, res) => {
 // USERS
 
 
-router.get("/users", (req, res) => {
+router.get("/users", restricted, (req, res) => {
     Users.find()
     .then(users => {
         res.json(users);
